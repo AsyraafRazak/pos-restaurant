@@ -108,23 +108,70 @@
                     <ItemsControl.ItemTemplate>
 
                         <DataTemplate>
+                            <Border
+        BorderBrush="LightGray"
+        BorderThickness="0,0,0,1"
+        Padding="10">
 
-                            <StackPanel Margin="10">
+                                <StackPanel>
 
-                                <TextBlock
-                    Text="{Binding Product.Name}"
-                    FontSize="18"/>
+                                    <!-- Product name -->
+                                    <TextBlock
+                Text="{Binding Product.Name}"
+                FontSize="18"
+                FontWeight="Bold"/>
 
-                                <TextBlock
+                                    <!-- Unit price -->
+                                    <TextBlock
+                Text="{Binding Product.Price, StringFormat=RM {0:F2}}"
+                FontSize="14"/>
+
+                                    <!-- Quantity controls -->
+                                    <StackPanel
+                Orientation="Horizontal"
+                Margin="0,8,0,0">
+
+                                        <Button
+                    Content="-"
+                    Width="35"
+                    Height="30"
+                    Command="{Binding DataContext.DecreaseQuantityCommand,
+                                      RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding}"/>
+
+                                        <TextBlock
                     Text="{Binding Quantity}"
-                    FontSize="16"/>
+                    Width="40"
+                    FontSize="18"
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"/>
 
-                                <TextBlock
-                    Text="{Binding Subtotal, StringFormat=RM {0:F2}}"
-                    FontSize="16"/>
+                                        <Button
+                    Content="+"
+                    Width="35"
+                    Height="30"
+                    Command="{Binding DataContext.IncreaseQuantityCommand,
+                                      RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding}"/>
 
-                            </StackPanel>
+                                        <Button
+                    Content="Remove"
+                    Margin="10,0,0,0"
+                    Command="{Binding DataContext.RemoveFromCartCommand,
+                                      RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding}"/>
 
+                                    </StackPanel>
+
+                                    <!-- Subtotal -->
+                                    <TextBlock
+                Text="{Binding Subtotal, StringFormat=Subtotal: RM {0:F2}}"
+                FontSize="16"
+                Margin="0,8,0,0"/>
+
+                                </StackPanel>
+
+                            </Border>
                         </DataTemplate>
 
                     </ItemsControl.ItemTemplate>
