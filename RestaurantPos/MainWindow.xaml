@@ -182,12 +182,25 @@
         </Grid>
 
         <!-- Footer -->
-        <TextBlock
-    Text="{Binding Total, StringFormat=Total: RM {0:F2}}"
-    FontSize="28"
-    HorizontalAlignment="Right"
-    Margin="20"
-    Grid.Row="2"/>
+        <StackPanel
+    Grid.Row="2"
+    Orientation="Horizontal"
+    HorizontalAlignment="Right">
+
+            <TextBlock
+        Text="{Binding Total, StringFormat=Total: RM {0:F2}}"
+        FontSize="28"
+        Margin="20"/>
+
+            <Button
+        Content="Checkout"
+        Width="150"
+        Height="60"
+        Margin="10"
+        FontSize="20"
+        Command="{Binding CheckoutCommand}"/>
+
+        </StackPanel>
 
     </Grid>
 
