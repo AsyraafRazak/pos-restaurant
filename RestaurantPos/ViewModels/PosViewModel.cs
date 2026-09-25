@@ -59,6 +59,27 @@ namespace RestaurantPos.ViewModels
                 Name = "Coffee",
                 Price = 4.00m
             });
+
+            IncreaseQuantityCommand = new RelayCommand(
+    parameter =>
+    {
+        CartItem item = (CartItem)parameter!;
+        IncreaseQuantity(item);
+    });
+
+            DecreaseQuantityCommand = new RelayCommand(
+                parameter =>
+                {
+                    CartItem item = (CartItem)parameter!;
+                    DecreaseQuantity(item);
+                });
+
+            RemoveFromCartCommand = new RelayCommand(
+                parameter =>
+                {
+                    CartItem item = (CartItem)parameter!;
+                    RemoveFromCart(item);
+                });
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -91,6 +112,36 @@ namespace RestaurantPos.ViewModels
             OnPropertyChanged(nameof(Total));
         }
 
+        public void IncreaseQuantity(CartItem item)
+        {
+            item.Quantity++;
+
+            OnPropertyChanged(nameof(Total));
+        }
+
+        public void DecreaseQuantity(CartItem item)
+        {
+            if (item.Quantity > 1)
+            {
+                item.Quantity--;
+
+                OnPropertyChanged(nameof(Total));
+            }
+        }
+
+        public void RemoveFromCart(CartItem item)
+        {
+            CartItems.Remove(item);
+
+            OnPropertyChanged(nameof(Total));
+        }
+
         public RelayCommand AddToCartCommand { get; }
+
+        public RelayCommand IncreaseQuantityCommand { get; }
+
+        public RelayCommand DecreaseQuantityCommand { get; }
+
+        public RelayCommand RemoveFromCartCommand { get; }
     }
 }
