@@ -61,11 +61,11 @@ namespace RestaurantPos.ViewModels
             });
 
             IncreaseQuantityCommand = new RelayCommand(
-    parameter =>
-    {
-        CartItem item = (CartItem)parameter!;
-        IncreaseQuantity(item);
-    });
+                parameter =>
+                {
+                    CartItem item = (CartItem)parameter!;
+                    IncreaseQuantity(item);
+                });
 
             DecreaseQuantityCommand = new RelayCommand(
                 parameter =>
@@ -79,6 +79,15 @@ namespace RestaurantPos.ViewModels
                 {
                     CartItem item = (CartItem)parameter!;
                     RemoveFromCart(item);
+                });
+            CheckoutCommand = new RelayCommand(
+                parameter =>
+                {
+                    Checkout();
+                },
+                parameter =>
+                {
+                    return CartItems.Count > 0;
                 });
         }
 
@@ -110,6 +119,8 @@ namespace RestaurantPos.ViewModels
             }
 
             OnPropertyChanged(nameof(Total));
+
+            CheckoutCommand.RaiseCanExecuteChanged();
         }
 
         public void IncreaseQuantity(CartItem item)
@@ -134,6 +145,13 @@ namespace RestaurantPos.ViewModels
             CartItems.Remove(item);
 
             OnPropertyChanged(nameof(Total));
+
+            CheckoutCommand.RaiseCanExecuteChanged();
+        }
+
+        public void Checkout()
+        {
+            // Temporary test
         }
 
         public RelayCommand AddToCartCommand { get; }
@@ -143,5 +161,7 @@ namespace RestaurantPos.ViewModels
         public RelayCommand DecreaseQuantityCommand { get; }
 
         public RelayCommand RemoveFromCartCommand { get; }
+
+        public RelayCommand CheckoutCommand { get; }
     }
 }
